@@ -16,7 +16,8 @@ body {
 ul, li {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10pt;
-	color: #333;
+  color: #333;
+  padding: 0;
 }
 a {
 	color: orange;
@@ -339,11 +340,12 @@ nav h1 a {
   #restaurants-list {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
     width: 100%;
   }
 
   #restaurants-list li{
-    width: 39%;
+    width: 38.8%;
   }
 
   #breadcrumb {
@@ -365,6 +367,7 @@ nav h1 a {
 
   .inside #map-container {
     z-index: 2;
+    height: 89.7%;
   }
   #restaurant-cuisine {
     margin: 0 auto;
