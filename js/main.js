@@ -150,6 +150,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
     ul.append(createRestaurantHTML(restaurant));
   });
   addMarkersToMap();
+  changeTabIndexFromControl();
 }
 
 /**
@@ -215,4 +216,13 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
   });
 } */
+
+
+/**
+ * Remove focus from leaflet link in attribution control
+ */
+changeTabIndexFromControl = () => {
+  let controlLeaflet = document.querySelector('.leaflet-control-attribution').firstChild;
+  controlLeaflet.setAttribute('tabindex', '-1');
+}
 
