@@ -227,3 +227,5 @@ changeTabIndexFromControl = () => {
   controlLeaflet.setAttribute('tabindex', '-1');
 }
 
+navigator.serviceWorker.register('/sw.js');
+
