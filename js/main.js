@@ -227,5 +227,24 @@ changeTabIndexFromControl = () => {
   controlLeaflet.setAttribute('tabindex', '-1');
 }
 
-navigator.serviceWorker.register('/sw.js');
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then(function(reg) {
+    if(reg.installing) {
+      console.log('Installing');
+    }
+  
+    else if(reg.waiting) {
+      console.log('Installed');
+    }
+  
+    else if(reg.active) {
+      console.log('Activated');
+    }
+  
+    console.log('Registered success. Scope is ' + reg.scope);
+  }).catch(function(error) {
+    console.log('Registered failed. Error ' + error);
+  });
+}
+
 

@@ -279,8 +279,8 @@ nav h1 a {
 /* ================ Media Queries ================== */
 @media screen and (max-width: 840px){
   #maincontent {
-    display: flex;
-    flex-wrap: wrap;
+    /* display: flex;
+    flex-wrap: wrap; */
     position: relative;
   }
 

@@ -1,29 +1,37 @@
-const staticCacheName = 'restaurant-reviews-v2';
+let staticCacheName = 'restaurant-reviews-v1';
+
 const requests = [
+    '/',
     '/index.html',
-    'js/main.js',
-    'js/restaurant_info.js',
-    'css/styles.css',
-    'js/dbhelper.js',
-    'data/restaurants.json'
+    '/restaurant.html',
+    '/data/restaurants.json',
+    '/css/styles.css',
+    '/js/dbhelper.js',
+    '/js/main.js',
+    '/js/restaurant_info.js',
+    '/img/1.jpg',
+    '/img/2.jpg',
+    '/img/3.jpg',
+    '/img/4.jpg',
+    '/img/5.jpg',
+    '/img/6.jpg',
+    '/img/7.jpg',
+    '/img/8.jpg',
+    '/img/9.jpg',
+    '/img/10.jpg'
 ];
 
-// Cache all restaurants and images
-for (let i = 1; i <= 10; i++) {
-    requests.push(`/restaurant.html?id=${i}`);
-    requests.push(`img/${i}.jpg`);
-}
-
-// Open a new cache during installation of service worker and cache all urls
 self.addEventListener('install', function(event) { 
     event.waitUntil(
         caches.open(staticCacheName).then(function(cache) {
+            console.log(cache);
             return cache.addAll(requests);
-        })
+        }).catch(function(err) {
+            console.log(err);
+        }) 
     );
 });
 
-// Delete unwanted caches and leave the current one only
 self.addEventListener('activate', function(event) {
     event.waitUntil(
       caches.keys().then(function(cacheNames) {
@@ -39,13 +47,23 @@ self.addEventListener('activate', function(event) {
     );
 });
 
-// Fetch the requested url online or search for it in cache
 self.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.match(event.request).then(function(response) {
-          return response || fetch(event.request);
-        }).catch(function(err) {
-            return err;
-        })
-    );
-});
+        //   return response || fetch(event.request);
+        if(response) return response;
+
+        return fetch(event.request).then(function(networkResponse) {
+            if(networkResponse.status === 404) {
+                return networkResponse.status;
+            }
+
+            caches.open(staticCacheName).then(function(cache) {
+                cache.put(event.request.url, networkResponse.clone())
+                return networkResponse;
+            }).catch(function(err) {
+                return err;
+            })
+        });
+    })
+)});
